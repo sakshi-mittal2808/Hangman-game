@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOOD</title>
+    <!-- Adding image to title bar -->
+    <link rel="icon" href="https://th.bing.com/th/id/OIP.h5h15aU1E6OR8In7NKCxgAHaDt?pid=ImgDet&rs=1">
+    <link rel="stylesheet" href="animal.css">
+</head>
+<body>
+    <div class="container">
+        <p>Find the hidden word- Includes Fruits and Vegetables</p>
+        <h1>Enter the letter</h1>
+        <p>(Make sure letters must be in small letter)</p>
+        <div class="left-box">
+            <svg height="500px" width="600px" class="stand">
+                <!-- horizonatl bar 1 -->    
+                <line x1="100px" x2="400px"/>
+                <!-- long vertical bar-->
+                <line x1="100px" x2="100px" y2="500px"/>
+                <!-- short vertical bar-->
+                <line x1="400px" x2="400px" y2="100px"/>
+                <!-- horizonatl bar 2 -->
+                <line x1="50px" x2="150px" y1="500px" y2="500px"/>
+                <!-- head -->
+                <circle class="body" cx="400" cy="130px" r="30px"/>
+                <!-- Body -->
+                <line class="body" x1="400px" x2="400px" y1="160px" y2="260px"/>
+                <!-- 1st leg --> 
+                <line class="body" x1="400px" x2="370px" y1="260px" y2="300px"/>
+                <!-- 2nd leg --> 
+                <line class="body" x1="400px" x2="430px" y1="260px" y2="300px"/>
+                <!-- 1st arm --> 
+                <line class="body" x1="400px" x2="450px" y1="220px" y2="160px"/>
+                <!-- 2nd arm --> 
+                <line class="body" x1="400px" x2="350px" y1="220px" y2="160px"/>
+            </svg>
+        </div>
+        <div class="right-box">
+            <h1>Length of word is:</h1>
+            <h1 id="length_of_word"></h1>
+            <div class="word" id="word">
+                <!-- <div class="letter">s</div>
+                <div class="letter">a</div>
+                <div class="letter">k</div>
+                <div class="letter">s</div> 
+                <div class="letter">h</div>
+                <div class="letter">i</div>-->
+            </div> 
+        </div>
+    </div>
+    <!-- Pop up box -->
+    <div class="popup" id="popup">
+        <span class="message" id="message">Unfortunately, You lost :(</span>
+        <span>Answer is:</span>
+        <span class="Answer" id="Answer"></span><br>
+        <a href="start_button.html"><button id="play_button">PLAY AGAIN</button> 
+    </div>
+<!-- JAVASCRIPT FILE INCLUDE -->
+<script>
+
+const word=document.getElementById("word");
+const figure=document.querySelectorAll(".body");
+const button=document.getElementById("play_button");
+const words=
+[
+    'cauliflower',
+    'broccoli',
+    'cabbage',
+    'spinach',
+    'lettuce',
+    'mint',
+    'onion',
+    'beetroot',
+    'carrot',
+    'turnip',
+    'radish',
+    'potato',
+    'ginger',
+    'turmeric',
+    'cucumber',
+    'pumpkin',
+    'tomato',
+    'peppers',
+    'eggplant',
+    'corn',
+    'beans',
+    'chickpeas',
+    'apple',
+    'avocado',
+    'banana',
+    'blackberry',
+    'blueberry',
+    'cherry',
+    'coconut',
+    'cucumber',
+    'dragonfruit',
+    'gooseberry',
+    'grape',
+    'guava',
+    'plum',
+    'kiwi',
+    'lemon',
+    'lime',
+    'mango',
+    'watermelon',
+    'mulberry',
+    'orange',
+    'papaya',
+    'peach',
+    'pear',
+    'pineapple',
+    'pineberry',
+    'raspberry',
+    'strawberry',
+]
+
+let PresentWord=words[Math.floor(Math.random()*words.length)];
+const correctletters=[];
+const wrongLetters=[];
+
+//Counting distint characters in Word
+function distnict_char(PresentWord)
+{
+    // Set---->collection of unique values
+    let arr=new Set( );
+    for (let i = 0; i < PresentWord.length; i++) 
+    {
+        arr.add(PresentWord[i]);
+    }
+    return arr.size;
+}
+
+var len=distnict_char(PresentWord);
+console.log(len);
+
+// calculating length
+var word_len=PresentWord.length;
+document.getElementById("length_of_word").innerHTML=word_len;
+console.log("length of word is",word_len);
+
+//display word
+// Map remembers the original insertion order of the keys
+function display_word()
+{
+    word.innerHTML=
+    `${PresentWord
+        .split('')
+        .map(letter => 
+                `<span class="letter">
+                    ${correctletters.includes(letter)
+                    ?letter
+                    :''}
+                </span>`
+            )
+        .join('')}
+    `;
+    var correct_length=correctletters.length;
+    if(len===correct_length)
+    {
+        document.getElementById("message").innerText="Congratulations, You win :)";
+        document.getElementById("Answer").innerHTML=PresentWord;
+        document.getElementById("popup").style.display="block";
+    }
+}
+
+function update_figure_part()
+{
+    figure.forEach((part,index)=>
+    {
+        const error=wrongLetters.length;
+        if(index<error)
+        {
+            part.style.display='block';
+        }
+        else
+        {
+            part.style.display='none';
+        }
+    });
+
+    if(wrongLetters.length===figure.length)
+    {
+        document.getElementById("message").innerHTML="Unfortunately, You lost :(";
+        document.getElementById("Answer").innerHTML=PresentWord;
+        document.getElementById("popup").style.display="block";
+    }
+}
+
+// AddEvenListener----> use to add the event in the program.......
+// syntax for AddEvenListener---------->element.addEventListener(event, function, useCapture); 3rd parameter is optional
+// onkeydown	The user presses a key
+// onkeypress	The user presses a key
+// onkeyup	the user releases a key
+// Events must be written without using on keyword
+window.addEventListener('keydown',c=>
+{
+    // console.log(c.keyCode);
+    if(c.keyCode>=65 && c.keyCode<=90)
+    {
+        const letter=c.key;
+    
+        if(PresentWord.includes(letter))
+        {
+            if(!correctletters.includes(letter))
+            {
+                correctletters.push(letter);
+                display_word();
+            }
+        }
+        else
+        {
+            wrongLetters.push(letter);
+            update_figure_part( );
+        }
+    }
+});
+
+
+// Game restart
+button.addEventListener('click',()=>
+{
+    correctletters.splice(0);
+    wrongLetters.splice(0);
+
+    PresentWord=words[Math.floor(Math.random()*words.length)];
+
+    display_word( );
+    update_figure_part( );
+})
+display_word();
+console.log(PresentWord);
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+body
+{
+    background-image: url("hangman.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.CONTENT
+{
+    font-size: 80px;
+    text-align: center;
+    font-family: Castellar;
+    color: black;
+    font-weight: bold;
+}
+
+
+#ANIMAL
+{
+    position:absolute;
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    font-size: 40px;
+    background-color: black;
+    color:white;
+    font-family: cursive;
+    margin:410px 0px 0px 370px;
+}
+
+#ANIMAL:hover
+{
+    background-image: url("animal.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#FOOD
+{
+    position:absolute;
+    float:left;
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    font-size: 50px;
+    background-color: black;
+    color:white;
+    font-family: cursive;
+    margin:410px 0px 0px 1120px;
+}
+
+#FOOD:hover
+{
+    background-image: url("animal.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+} 
